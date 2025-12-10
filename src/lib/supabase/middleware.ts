@@ -15,14 +15,21 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
+          cookiesToSet.forEach(({ name, value, options }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
             request,
           });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, {
+              ...options,
+              // Ensure cookies persist across browser sessions
+              maxAge: options?.maxAge ?? 60 * 60 * 24 * 7, // 7 days default
+              path: options?.path ?? "/",
+              sameSite: options?.sameSite ?? "lax",
+              secure: process.env.NODE_ENV === "production",
+            })
           );
         },
       },
@@ -37,12 +44,16 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protected routes
-  if (
-    !user &&
-    (request.nextUrl.pathname.startsWith("/dashboard") ||
-      request.nextUrl.pathname.startsWith("/api/quizzes"))
-  ) {
+  // Protected API routes - return JSON 401 instead of redirect
+  if (!user && request.nextUrl.pathname.startsWith("/api/quizzes")) {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
+  // Protected page routes - redirect to login
+  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

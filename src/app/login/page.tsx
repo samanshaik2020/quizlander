@@ -1,15 +1,73 @@
 import { LoginForm } from "@/components/auth/login-form";
-import { Sparkles } from "lucide-react";
+import { CircleDot, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-muted p-4">
-      <Link href="/" className="flex items-center gap-2 mb-8">
-        <Sparkles className="h-6 w-6 text-primary" />
-        <span className="text-xl font-bold">QuizLander</span>
-      </Link>
-      <LoginForm />
+    <div className="min-h-screen flex">
+      {/* Left Side - Website Details */}
+      <div className="hidden lg:flex lg:w-1/2 bg-slate-900 text-white flex-col justify-between p-12">
+        <div>
+          <Link href="/" className="flex items-center gap-2">
+            <CircleDot className="h-8 w-8" />
+            <span className="text-2xl font-bold">QuizLander</span>
+          </Link>
+        </div>
+
+        <div className="space-y-8">
+          <div>
+            <h1 className="text-4xl font-bold leading-tight mb-4">
+              Create engaging quizzes in minutes
+            </h1>
+            <p className="text-slate-400 text-lg">
+              Join thousands of educators and content creators who use QuizLander to build interactive quizzes.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <span className="text-slate-300">Easy drag-and-drop quiz builder</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <span className="text-slate-300">Share quizzes with a unique link</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <span className="text-slate-300">Instant results and analytics</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <span className="text-slate-300">Beautiful customizable result pages</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-slate-500 text-sm">
+          © {new Date().getFullYear()} QuizLander. All rights reserved.
+        </div>
+      </div>
+
+      {/* Right Side - Login Form */}
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-slate-50 p-8">
+        <div className="w-full max-w-md">
+          {/* Mobile Logo */}
+          <div className="lg:hidden flex justify-center mb-8">
+            <Link href="/" className="flex items-center gap-2">
+              <CircleDot className="h-7 w-7 text-slate-900" />
+              <span className="text-xl font-bold text-slate-900">QuizLander</span>
+            </Link>
+          </div>
+
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Welcome back</h2>
+            <p className="text-slate-600">Sign in to your account to continue</p>
+          </div>
+
+          <LoginForm />
+        </div>
+      </div>
     </div>
   );
 }

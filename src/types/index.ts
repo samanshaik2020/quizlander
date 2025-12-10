@@ -19,12 +19,43 @@ export interface Question {
   options: Option[];
 }
 
+export interface FinalPageStyles {
+  // Background
+  backgroundColor?: string;
+  backgroundImage?: string;
+  backgroundOverlay?: string;
+  // Card
+  cardBackgroundColor?: string;
+  cardBorderRadius?: string;
+  cardShadow?: string;
+  // Title
+  titleFontSize?: string;
+  titleColor?: string;
+  titleFontWeight?: string;
+  // Body
+  bodyFontSize?: string;
+  bodyColor?: string;
+  // Score
+  scoreFontSize?: string;
+  scoreColor?: string;
+  // Icon
+  iconColor?: string;
+  iconBackgroundColor?: string;
+  showIcon?: boolean;
+  // Button
+  buttonBackgroundColor?: string;
+  buttonTextColor?: string;
+  buttonBorderRadius?: string;
+  buttonFontSize?: string;
+}
+
 export interface FinalPage {
   title: string;
   body: string;
   buttonText: string;
   buttonAction: "retake" | "url";
   buttonUrl?: string;
+  styles?: FinalPageStyles;
 }
 
 export interface Quiz {
